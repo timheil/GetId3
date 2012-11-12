@@ -65,17 +65,6 @@ class GetId3_GetId3
      */
     public function __construct()
     {
-        // Magic autoload function
-        function __autoload($className)
-        {
-            $realpath = realpath(dirname(__FILE__));
-            $realpath = explode(DIRECTORY_SEPARATOR, $realpath);
-            array_pop($realpath);
-            $realpath = implode(DIRECTORY_SEPARATOR, $realpath);
-            $className = $realpath . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, explode('_', $className)) . '.php';
-            include_once $className;
-        }
-
         $this->tempdir = self::getTempDir();
         // Check for PHP version
         $required_php_version = '5.0.5';
@@ -1586,7 +1575,7 @@ class GetId3_GetId3
     /**
      *
      */
-    protected static function getTempDir()
+    public static function getTempDir()
     {
         if (null === self::$TempDir) {
             $temp_dir = ini_get('upload_tmp_dir');

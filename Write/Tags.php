@@ -239,42 +239,6 @@ class GetId3_Write_Tags
 
 		$WritingFilesToInclude = array_merge($this->tagformats, $TagFormatsToRemove);
 
-		// Check for required include files and include them
-		foreach ($WritingFilesToInclude as $tagformat) {
-			switch ($tagformat) {
-				case 'ape':
-					$GETID3_ERRORARRAY = &$this->errors;
-
-					return class_exists('GetId3_Write_Apetag');
-					break;
-
-				case 'id3v1':
-				case 'lyrics3':
-				case 'vorbiscomment':
-				case 'metaflac':
-				case 'real':
-					$GETID3_ERRORARRAY = &$this->errors;
-
-                    return class_exists('GetId3_Write_' . ucfirst($tagformat));
-					break;
-
-				case 'id3v2.2':
-				case 'id3v2.3':
-				case 'id3v2.4':
-				case 'id3v2':
-					$GETID3_ERRORARRAY = &$this->errors;
-
-                    return class_exists('GetId3_Write_Id3v2');
-					break;
-
-				default:
-					$this->errors[] = 'unknown tag format "'.$tagformat.'" in $tagformats in WriteTags()';
-					return false;
-					break;
-			}
-
-		}
-
 		// Validation of supplied data
 		if (!is_array($this->tag_data)) {
 			$this->errors[] = '$this->tag_data is not an array in WriteTags()';
